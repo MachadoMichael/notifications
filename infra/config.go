@@ -3,15 +3,17 @@ package infra
 import (
 	"log"
 	"os"
+	"strconv"
 
 	"github.com/joho/godotenv"
 )
 
 type ConfigData struct {
 	Port        string
-	Account     string
-	AuthToken   string
-	Sender      string
+	DbAddress   string
+	DbPassword  string
+	DbName      int
+	JwtSecret   string
 	LogFilePath string
 }
 
@@ -23,11 +25,23 @@ func Init() {
 		log.Fatalf("Error loading .env file")
 	}
 
+	envDbName := os.Getenv("DATABASE_NAME")
+	if envDbName == "" {
+		log.Fatal("Error on read database name.")
+	}
+
+	dbName, err := strconv.Atoi(envDbName)
+	if err != nil {
+		log.Fatal(err)
+		panic("Cannot read envDbName")
+	}
+
 	Config = &ConfigData{
 		Port:        os.Getenv("PORT"),
-		Account:     os.Getenv("ACCOUNT"),
-		AuthToken:   os.Getenv("AUTH_TOKEN"),
-		Sender:      os.Getenv("SENDER"),
+		DbAddress:   os.Getenv("DATABASE_ADDRESS"),
+		DbPassword:  os.Getenv("DATABASE_PASSWORD"),
+		DbName:      dbName,
+		JwtSecret:   os.Getenv("JWT_SECRET"),
 		LogFilePath: os.Getenv("LOG_FILE_PATH"),
 	}
 

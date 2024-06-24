@@ -20,6 +20,7 @@ func Init() {
 		v2.POST("/create", handler.Create)
 		v2.GET("/read", handler.Read)
 		v2.PUT("/update", handler.Update)
+		v2.DELETE("/delete", handler.Delete)
 	}
 
 	router.Run(":" + port)
