@@ -20,8 +20,10 @@ func Send(ctx *gin.Context) {
 	err := whatsapp.Sender(request.Recipient, request.Body)
 	if err != nil {
 		logger.ErrorLogger.Write(slog.LevelError, err.Error())
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	logger.MessageLogger.Write(slog.LevelInfo, "Message sent with successfuly, from: "+request.Recipient+" & body: "+request.Body)
+	logger.MessageLogger.Write(slog.LevelInfo, "Message sent successfully, from: "+request.Recipient+" & body: "+request.Body)
+	ctx.JSON(http.StatusOK, gin.H{"message": "Message sent successfully"})
 }
