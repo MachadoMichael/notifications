@@ -9,7 +9,7 @@ import (
 	"github.com/go-redis/redis/v8"
 )
 
-var CustomerRepo *Repo
+var EnterpriseRepo *Repo
 var client *redis.Client
 
 func Init() {
@@ -28,7 +28,7 @@ func Init() {
 
 	fmt.Printf(pong)
 	client = rdb
-	CustomerRepo = NewRepo(ctx, rdb)
+	EnterpriseRepo = NewRepo(ctx, rdb)
 }
 
 func CloseDb() {
