@@ -1,20 +1,19 @@
 package whatsapp
 
-import "os"
-
-func Send(recipient, body string) {
+func Sender(recipient, body string) error {
 	Params.SetTo(recipient)
 	Params.SetBody(body)
 
 	res, err := Client.Api.CreateMessage(Params)
 	if err != nil {
-		println(err.Error())
-		os.Exit(1)
+		return err
 	} else {
 		if res.Body != nil {
 			println(*res.Body)
+			return nil
 		} else {
 			println(res.Body)
+			return nil
 		}
 	}
 
