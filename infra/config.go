@@ -12,6 +12,7 @@ type ConfigData struct {
 	Account   string
 	AuthToken string
 	Sender    string
+	LogPath   string
 }
 
 var Config *ConfigData
@@ -27,6 +28,7 @@ func Init() {
 		Account:   os.Getenv("ACCOUNT"),
 		AuthToken: os.Getenv("AUTH_TOKEN"),
 		Sender:    os.Getenv("SENDER"),
+		LogPath:   os.Getenv("LOG_FILE_PATH"),
 	}
 
 }
