@@ -9,7 +9,7 @@ import (
 )
 
 func loadingFile(fileName string) (*os.File, error) {
-	dir := infra.Config.LogPath
+	dir := infra.Config.LogFilePath
 	if _, err := os.Stat(dir); os.IsNotExist(err) {
 		err := os.Mkdir(dir, os.ModePerm)
 		if err != nil {

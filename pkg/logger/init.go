@@ -12,7 +12,6 @@ var (
 )
 
 func InitLoggers() {
-
 	accessFile, err := loadingFile("access.log")
 	if err != nil {
 		log.Fatalf("Error on start access.log, error: %v", err)
