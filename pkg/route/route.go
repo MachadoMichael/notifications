@@ -2,8 +2,8 @@ package route
 
 import (
 	"log"
-	"os"
 
+	"github.com/MachadoMichael/notifications/infra"
 	"github.com/MachadoMichael/notifications/pkg/handler"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -15,7 +15,7 @@ func Init() {
 		log.Fatalf("Error loading .env file")
 	}
 
-	port := os.Getenv("PORT")
+	port := infra.Config.Port
 
 	router := gin.Default()
 	v1 := router.Group("/notifications/whatsapp")
