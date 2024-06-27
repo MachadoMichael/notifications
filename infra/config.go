@@ -14,6 +14,7 @@ type ConfigData struct {
 	DbPassword  string
 	DbName      int
 	JwtSecret   string
+	ApiToken    string
 	LogFilePath string
 }
 
@@ -42,6 +43,7 @@ func Init() {
 		DbPassword:  os.Getenv("DATABASE_PASSWORD"),
 		DbName:      dbName,
 		JwtSecret:   os.Getenv("JWT_SECRET"),
+		ApiToken:    os.Getenv("API_TOKEN"),
 		LogFilePath: os.Getenv("LOG_FILE_PATH"),
 	}
 

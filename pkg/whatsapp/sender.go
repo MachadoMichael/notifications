@@ -2,10 +2,13 @@ package whatsapp
 
 import (
 	"encoding/json"
+	"errors"
 
+	"github.com/MachadoMichael/notifications/infra"
 	"github.com/MachadoMichael/notifications/infra/database"
 	"github.com/MachadoMichael/notifications/pkg/logger"
 	"github.com/MachadoMichael/notifications/schema"
+	"github.com/go-resty/resty/v2"
 	"golang.org/x/exp/slog"
 )
 
@@ -30,20 +33,24 @@ func Sender(enterpriseName, recipient, body string) error {
 			"body": body,
 		},
 	}
-	Params.SetTo(recipient)
-	Params.SetBody(body)
 
-	res, err := Client.Api.CreateMessage(Params)
+	resp, err := client.R().
+		SetHeader("Content-Type", "application/json").
+		SetHeader("Authorization", "Bearer "+infra.Config.ApiToken).
+		SetBody(payload).
+		Post(apiUrl)
+
 	if err != nil {
+		logger.ErrorLogger.Write(slog.LevelError, err.Error())
 		return err
-	} else {
-		if res.Body != nil {
-			println(*res.Body)
-			return nil
-		} else {
-			println(res.Body)
-			return nil
-		}
 	}
 
+	if resp.IsError() {
+		logger.ErrorLogger.Write(slog.LevelError, "Whatsapp response error")
+		return errors.New("Whatsapp response error")
+	}
+
+	logger.MessageLogger.Write(slog.LevelInfo, "Message sent successfully.")
+
+	return nil
 }
